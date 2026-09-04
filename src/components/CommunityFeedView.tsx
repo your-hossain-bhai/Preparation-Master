@@ -1,0 +1,453 @@
+import React, { useState, useEffect } from 'react';
+import { CommunityPost, UserProfile, CommentItem } from '../types';
+import { useLanguage } from '../LanguageContext';
+import { ThumbsUp, MessageSquare, Send, PlusCircle, Bot, Sparkles, Filter, Loader2, Trophy, Users, RefreshCw } from 'lucide-react';
+import { Leaderboard } from './Leaderboard';
+import { cleanMathText } from '../utils/mathFormatter';
+import {
+  fetchCommunityPostsFromFirestore,
+  saveCommunityPostToFirestore,
+  togglePostUpvoteInFirestore,
+  addCommentToPostInFirestore,
+} from '../firebase';
+import { INITIAL_POSTS } from '../data/mockCommunity';
+
+interface CommunityFeedViewProps {
+  user: UserProfile;
+}
+
+export const CommunityFeedView: React.FC<CommunityFeedViewProps> = ({ user }) => {
+  const { lang, t } = useLanguage();
+  const [activeCommunityTab, setActiveCommunityTab] = useState<'feed' | 'leaderboard'>('feed');
+  const [posts, setPosts] = useState<CommunityPost[]>(INITIAL_POSTS);
+  const [selectedSubjectFilter, setSelectedSubjectFilter] = useState('All');
+  const [showNewPostModal, setShowNewPostModal] = useState(false);
+  const [loadingPosts, setLoadingPosts] = useState(false);
+
+  // Load from Firestore
+  useEffect(() => {
+    let isMounted = true;
+    const loadPosts = async () => {
+      setLoadingPosts(true);
+      try {
+        const firestorePosts = await fetchCommunityPostsFromFirestore();
+        if (isMounted && firestorePosts !== null) {
+          // If we successfully fetched from Firestore (even if empty), use it
+          setPosts(firestorePosts);
+        }
+      } catch (err) {
+        console.warn('Could not load Firestore posts, using initial baseline:', err);
+      } finally {
+        if (isMounted) setLoadingPosts(false);
+      }
+    };
+
+    loadPosts();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  // New post state
+  const [newSubject, setNewSubject] = useState('Physics');
+  const [newQuestion, setNewQuestion] = useState('');
+  const [newPostLoading, setNewPostLoading] = useState(false);
+
+  // Comment state
+  const [activeCommentPostId, setActiveCommentPostId] = useState<string | null>(null);
+  const [commentInput, setCommentInput] = useState('');
+
+  // AI Tutor response loading on post
+  const [aiLoadingPostId, setAiLoadingPostId] = useState<string | null>(null);
+
+  const subjects = ['All', 'Physics', 'Chemistry', 'Higher Math', 'ICT', 'Biology'];
+
+  const filteredPosts = posts.filter(
+    (p) => selectedSubjectFilter === 'All' || p.subject.toLowerCase().includes(selectedSubjectFilter.toLowerCase())
+  );
+
+  const handleToggleUpvote = async (postId: string) => {
+    // Optimistic UI update
+    setPosts((prev) =>
+      prev.map((p) => {
+        if (p.id === postId) {
+          const userUpvoted = !p.userUpvoted;
+          return {
+            ...p,
+            userUpvoted,
+            upvotes: userUpvoted ? p.upvotes + 1 : p.upvotes - 1,
+          };
+        }
+        return p;
+      })
+    );
+
+    try {
+      await togglePostUpvoteInFirestore(postId, user.uid);
+    } catch (e) {
+      console.warn('Firestore upvote sync error:', e);
+    }
+  };
+
+  const handleCreatePost = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!newQuestion.trim()) return;
+
+    setNewPostLoading(true);
+
+    const newEntry: CommunityPost = {
+      id: `post-${Date.now()}`,
+      author: `${user.name} (${user.academicLevel})`,
+      level: user.academicLevel,
+      subject: newSubject,
+      questionText: newQuestion,
+      timestamp: lang === 'en' ? 'Just now' : 'এখনই',
+      upvotes: 1,
+      userUpvoted: true,
+      comments: [],
+    };
+
+    // Optimistic local update
+    setPosts([newEntry, ...posts]);
+    setNewQuestion('');
+    setShowNewPostModal(false);
+
+    try {
+      await saveCommunityPostToFirestore(newEntry);
+    } catch (err) {
+      console.warn('Firestore post save error:', err);
+    } finally {
+      setNewPostLoading(false);
+    }
+  };
+
+  const handleAddComment = async (postId: string) => {
+    if (!commentInput.trim()) return;
+
+    const newComment: CommentItem = {
+      id: `c-${Date.now()}`,
+      author: user.name,
+      text: commentInput,
+      timestamp: lang === 'en' ? 'Just now' : 'এখনই',
+    };
+
+    setPosts((prev) =>
+      prev.map((p) => {
+        if (p.id === postId) {
+          return {
+            ...p,
+            comments: [...p.comments, newComment],
+          };
+        }
+        return p;
+      })
+    );
+
+    const textToSave = commentInput;
+    setCommentInput('');
+
+    try {
+      await addCommentToPostInFirestore(postId, newComment);
+    } catch (e) {
+      console.warn('Firestore comment sync error:', e);
+    }
+  };
+
+  const handleTriggerAiTutorForPost = async (post: CommunityPost) => {
+    setAiLoadingPostId(post.id);
+
+    try {
+      const res = await fetch('/api/tutor/explain', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          question: post.questionText,
+          selectedOption: 'Community Question Query',
+          correctOption: 'Comprehensive Solution',
+          subject: post.subject,
+          academicLevel: post.level,
+          language: lang,
+        }),
+      });
+
+      const data = await res.json();
+
+      const aiComment: CommentItem = {
+        id: `ai-${Date.now()}`,
+        author: 'PrepMate AI Tutor 🤖',
+        text: data.explanation || '💡 Gemini AI Tutor: Always review textbook key formulas for this concept.',
+        isAiTutor: true,
+        timestamp: lang === 'en' ? 'Just now' : 'এখনই',
+      };
+
+      setPosts((prev) =>
+        prev.map((p) => {
+          if (p.id === post.id) {
+            return {
+              ...p,
+              comments: [aiComment, ...p.comments],
+            };
+          }
+          return p;
+        })
+      );
+      setActiveCommentPostId(post.id);
+
+      // Save AI comment to Firestore as well
+      await addCommentToPostInFirestore(post.id, aiComment);
+    } catch (err) {
+      console.error(err);
+    } finally {
+      setAiLoadingPostId(null);
+    }
+  };
+
+  return (
+    <div className="max-w-2xl mx-auto space-y-6">
+      {/* View Switcher Tabs */}
+      <div className="bg-white p-1.5 rounded-2xl border border-slate-200 flex items-center justify-between gap-2 shadow-lg">
+        <button
+          onClick={() => setActiveCommunityTab('feed')}
+          className={`flex-1 py-2.5 px-4 rounded-xl text-xs font-extrabold flex items-center justify-center gap-2 transition-all ${
+            activeCommunityTab === 'feed'
+              ? 'bg-blue-900 text-white shadow-md font-black'
+              : 'text-slate-500 hover:text-white hover:bg-slate-50'
+          }`}
+        >
+          <Users className="w-4 h-4" /> {t('feedTab')}
+        </button>
+
+        <button
+          onClick={() => setActiveCommunityTab('leaderboard')}
+          className={`flex-1 py-2.5 px-4 rounded-xl text-xs font-extrabold flex items-center justify-center gap-2 transition-all ${
+            activeCommunityTab === 'leaderboard'
+              ? 'bg-blue-900 text-white shadow-md font-black'
+              : 'text-slate-500 hover:text-white hover:bg-slate-50'
+          }`}
+        >
+          <Trophy className="w-4 h-4 text-blue-900 fill-blue-900 text-blue-900 group-hover:scale-110 transition-transform" /> {t('leaderboardTab')}
+        </button>
+      </div>
+
+      {activeCommunityTab === 'leaderboard' ? (
+        <Leaderboard currentUser={user} />
+      ) : (
+        <>
+          {/* Header & Post Modal Trigger */}
+          <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xl flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <div className="inline-flex items-center gap-1.5 bg-slate-100 border border-slate-200 text-slate-500 px-3 py-1 rounded-full text-xs font-bold mb-2">
+                <Users className="w-3.5 h-3.5 text-blue-900" /> SSC & HSC Student Forum
+              </div>
+              <h2 className="text-2xl font-bold tracking-tight text-slate-900">{t('communityHeader')}</h2>
+              <p className="text-xs text-slate-500 mt-1">
+                {t('communitySubtitle')}
+              </p>
+            </div>
+
+            <button
+              onClick={() => setShowNewPostModal(true)}
+              className="py-3 px-5 bg-blue-900 hover:bg-blue-800 text-white font-extrabold rounded-2xl text-xs shadow-lg shadow-blue-900/20 flex items-center justify-center gap-2 transition-all shrink-0 active:scale-95"
+            >
+              <PlusCircle className="w-4 h-4 text-slate-900" /> {t('postQuestionBtn')}
+            </button>
+          </div>
+
+          {/* Subject Filter Pills */}
+          <div className="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
+            <span className="text-xs font-bold text-slate-500 flex items-center gap-1 shrink-0 px-2 uppercase tracking-wider">
+              <Filter className="w-3.5 h-3.5 text-blue-900" /> {t('subjectFilter')}
+            </span>
+            {subjects.map((sub) => (
+              <button
+                key={sub}
+                onClick={() => setSelectedSubjectFilter(sub)}
+                className={`px-4 py-2 rounded-full text-xs font-bold shrink-0 transition-all border ${
+                  selectedSubjectFilter === sub
+                    ? 'bg-blue-900 text-white border-blue-900 shadow-md font-extrabold'
+                    : 'bg-white/10 border-white/15 text-slate-500/90 hover:bg-white/20 hover:text-white'
+                }`}
+              >
+                {sub === 'All' ? t('filterAll') : sub}
+              </button>
+            ))}
+          </div>
+
+          {/* Feed List */}
+          <div className="space-y-4">
+            {filteredPosts.map((post) => (
+              <div key={post.id} className="bg-white p-6 rounded-3xl border border-slate-200 shadow-2xl space-y-4">
+                {/* Author Info */}
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 bg-blue-900 text-white font-black rounded-2xl flex items-center justify-center text-sm shadow-md">
+                      {post.author.charAt(0)}
+                    </div>
+                    <div>
+                      <h4 className="text-xs font-bold text-slate-900">{post.author}</h4>
+                      <span className="text-[10px] text-slate-500">{post.timestamp}</span>
+                    </div>
+                  </div>
+
+                  <div className="flex items-center gap-2">
+                    <span className="px-3 py-1 bg-slate-100 text-slate-500 font-bold text-[11px] rounded-full border border-slate-200">
+                      {post.subject}
+                    </span>
+                    <span className="px-2.5 py-1 bg-white text-slate-900 font-mono font-bold text-[10px] rounded-lg border border-slate-200 shadow-sm">
+                      {post.level}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Question Text */}
+                <p className="text-sm font-medium text-slate-100 leading-relaxed whitespace-pre-line pt-1">
+                  {cleanMathText(post.questionText)}
+                </p>
+
+                {/* Actions Bar */}
+                <div className="flex items-center justify-between pt-3 border-t border-slate-200 text-xs text-slate-500">
+                  <button
+                    onClick={() => handleToggleUpvote(post.id)}
+                    className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl border font-bold transition-all ${
+                      post.userUpvoted
+                        ? 'bg-blue-900 text-white border-blue-900 shadow'
+                        : 'border-white/15 bg-white/5 hover:bg-white/15 text-white'
+                    }`}
+                  >
+                    <ThumbsUp className="w-3.5 h-3.5" />
+                    <span>{post.upvotes}</span>
+                  </button>
+
+                  <button
+                    onClick={() => setActiveCommentPostId(activeCommentPostId === post.id ? null : post.id)}
+                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-slate-200 bg-white hover:bg-white/15 font-semibold text-slate-900 transition-all shadow-sm"
+                  >
+                    <MessageSquare className="w-3.5 h-3.5 text-blue-900" />
+                    <span>{post.comments.length} {lang === 'en' ? 'Replies' : 'টি উত্তর'}</span>
+                  </button>
+
+                  <button
+                    onClick={() => handleTriggerAiTutorForPost(post)}
+                    disabled={aiLoadingPostId === post.id}
+                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl bg-blue-900 hover:bg-blue-800 text-white font-bold transition-all shadow-lg shadow-blue-900/20"
+                  >
+                    {aiLoadingPostId === post.id ? (
+                      <Loader2 className="w-3.5 h-3.5 animate-spin text-blue-900" />
+                    ) : (
+                      <>
+                        <Bot className="w-3.5 h-3.5 text-blue-900" /> {lang === 'en' ? 'AI Solution' : 'AI Tutor উত্তর'}
+                      </>
+                    )}
+                  </button>
+                </div>
+
+                {/* Comments Drawer */}
+                {(activeCommentPostId === post.id || post.comments.length > 0) && (
+                  <div className="pt-3 space-y-2.5 border-t border-slate-200">
+                    {post.comments.map((comment) => (
+                      <div
+                        key={comment.id}
+                        className={`p-3.5 rounded-2xl text-xs space-y-1.5 ${
+                          comment.isAiTutor
+                            ? 'bg-white text-slate-900 border border-slate-200 shadow-inner'
+                            : 'bg-white/5 border border-white/10 text-slate-600'
+                        }`}
+                      >
+                        <div className="flex items-center justify-between font-bold">
+                          <span className={comment.isAiTutor ? 'text-blue-900 flex items-center gap-1.5' : 'text-white'}>
+                            {comment.isAiTutor && <Sparkles className="w-3.5 h-3.5 text-blue-900" />}
+                            {comment.author}
+                          </span>
+                          <span className="text-[10px] text-slate-500 font-mono">{comment.timestamp}</span>
+                        </div>
+                        <p className="whitespace-pre-line leading-relaxed text-slate-500">{cleanMathText(comment.text)}</p>
+                      </div>
+                    ))}
+
+                    {/* Comment Input */}
+                    <div className="flex gap-2 pt-1">
+                      <input
+                        type="text"
+                        value={commentInput}
+                        onChange={(e) => setCommentInput(e.target.value)}
+                        placeholder={t('addCommentPlaceholder')}
+                        className="flex-1 px-3.5 py-2.5 bg-white border border-slate-200 rounded-2xl text-xs text-slate-900 placeholder-slate-400 focus:outline-none focus:border-blue-900 shadow-sm"
+                      />
+                      <button
+                        onClick={() => handleAddComment(post.id)}
+                        className="px-4 py-2.5 bg-blue-900 hover:bg-blue-800 text-white font-bold rounded-2xl text-xs flex items-center gap-1 shadow transition-all"
+                      >
+                        <Send className="w-3.5 h-3.5" />
+                      </button>
+                    </div>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </>
+      )}
+
+      {/* Modal: Create Post */}
+      {showNewPostModal && (
+        <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50 animate-fadeIn">
+          <div className="bg-slate-50 border border-slate-200 max-w-lg w-full p-6 sm:p-8 rounded-3xl shadow-2xl space-y-5 text-slate-900">
+            <h3 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+              <Sparkles className="w-5 h-5 text-blue-900" /> {t('newPostTitle')}
+            </h3>
+
+            <form onSubmit={handleCreatePost} className="space-y-4">
+              <div>
+                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
+                  {t('subjectPickerLabel')}
+                </label>
+                <select
+                  value={newSubject}
+                  onChange={(e) => setNewSubject(e.target.value)}
+                  className="w-full px-3.5 py-2.5 bg-white border border-slate-200 rounded-2xl text-xs font-bold text-slate-900 focus:outline-none focus:border-blue-900 shadow-sm"
+                >
+                  <option value="Physics">Physics</option>
+                  <option value="Chemistry">Chemistry</option>
+                  <option value="Higher Math">Higher Math</option>
+                  <option value="ICT">ICT</option>
+                  <option value="Biology">Biology</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="block text-[11px] font-bold text-slate-500 uppercase tracking-widest mb-1.5">
+                  {t('questionTitleLabel')}
+                </label>
+                <textarea
+                  rows={4}
+                  value={newQuestion}
+                  onChange={(e) => setNewQuestion(e.target.value)}
+                  placeholder={lang === 'en' ? 'e.g. Having difficulty understanding projectile motion formulas...' : 'যেমন: গতিবিদ্যা অধ্যায়ের এই সুত্রটির প্রয়োগ বুঝতে সমস্যা হচ্ছে...'}
+                  className="w-full p-3.5 bg-white border border-slate-200 rounded-2xl text-xs text-slate-900 placeholder-slate-400 focus:border-blue-900 focus:outline-none resize-none shadow-sm"
+                  required
+                />
+              </div>
+
+              <div className="flex gap-2 justify-end pt-2">
+                <button
+                  type="button"
+                  onClick={() => setShowNewPostModal(false)}
+                  className="px-4 py-2.5 text-xs font-bold text-slate-500 hover:bg-slate-50 rounded-2xl transition-all"
+                >
+                  {t('cancelBtn')}
+                </button>
+                <button
+                  type="submit"
+                  disabled={newPostLoading}
+                  className="px-6 py-2.5 bg-blue-900 hover:bg-blue-800 text-white font-extrabold rounded-2xl text-xs shadow-lg flex items-center gap-2 transition-all"
+                >
+                  {newPostLoading ? <Loader2 className="w-3.5 h-3.5 animate-spin text-blue-900" /> : (lang === 'en' ? 'Post Question' : 'পোস্ট নিশ্চিত করুন')}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};

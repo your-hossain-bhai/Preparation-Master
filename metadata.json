@@ -1,0 +1,8 @@
+{
+  "name": "Remix PrepMate BD",
+  "description": "AI-Powered SSC \u0026 HSC Board Exam Preparation \u0026 Community Platform for Bangladesh",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
