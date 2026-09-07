@@ -594,7 +594,7 @@ export const AuthView: React.FC<AuthViewProps> = ({ user, onUpdateUser, onLoginC
               className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
                 authMode === 'signin'
                   ? 'bg-blue-900 text-white shadow-md'
-                  : 'text-slate-500 hover:text-white'
+                  : 'text-slate-500 hover:text-slate-900'
               }`}
             >
               <LogIn className="w-3.5 h-3.5" />
@@ -609,7 +609,7 @@ export const AuthView: React.FC<AuthViewProps> = ({ user, onUpdateUser, onLoginC
               className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
                 authMode === 'signup'
                   ? 'bg-blue-900 text-white shadow-md'
-                  : 'text-slate-500 hover:text-white'
+                  : 'text-slate-500 hover:text-slate-900'
               }`}
             >
               <UserPlus className="w-3.5 h-3.5" />
@@ -624,7 +624,7 @@ export const AuthView: React.FC<AuthViewProps> = ({ user, onUpdateUser, onLoginC
               className={`flex-1 py-2.5 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
                 authMode === 'phone'
                   ? 'bg-blue-900 text-white shadow-md'
-                  : 'text-slate-500 hover:text-white'
+                  : 'text-slate-500 hover:text-slate-900'
               }`}
             >
               <Phone className="w-3.5 h-3.5" />
@@ -932,7 +932,7 @@ export const AuthView: React.FC<AuthViewProps> = ({ user, onUpdateUser, onLoginC
                     <button
                       type="button"
                       onClick={() => setOtpSent(false)}
-                      className="w-1/3 py-3 px-3 bg-white hover:bg-white/20 text-slate-900 font-bold rounded-2xl text-xs transition-all"
+                      className="w-1/3 py-3 px-3 bg-white hover:bg-slate-50 text-slate-900 font-bold rounded-2xl text-xs transition-all"
                     >
                       {lang === 'en' ? 'Back' : 'পিছনে যান'}
                     </button>

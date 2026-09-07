@@ -130,7 +130,7 @@ export const StudyReminderCard: React.FC<StudyReminderCardProps> = ({
           <button
             onClick={handleToggleEnable}
             className={`w-11 h-6 rounded-full transition-colors relative p-0.5 ${
-              enabled ? 'bg-blue-900' : 'bg-white/20'
+              enabled ? 'bg-blue-900' : 'bg-white'
             }`}
           >
             <div
@@ -189,7 +189,7 @@ export const StudyReminderCard: React.FC<StudyReminderCardProps> = ({
         {onOpenModal && (
           <button
             onClick={onOpenModal}
-            className="px-3.5 py-2 bg-white hover:bg-white/20 border border-slate-200 text-slate-900 font-bold rounded-xl text-xs transition-all flex items-center gap-1 shadow-sm"
+            className="px-3.5 py-2 bg-white hover:bg-slate-50 border border-slate-200 text-slate-900 font-bold rounded-xl text-xs transition-all flex items-center gap-1 shadow-sm"
           >
             <Bell className="w-3.5 h-3.5 text-blue-900" />
             <span>{isEnglish ? 'Settings' : 'সেটিংস'}</span>

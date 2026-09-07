@@ -295,7 +295,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ currentUser }) => {
                 className={`px-3.5 py-1.5 rounded-xl text-xs font-extrabold transition-all ${
                   filterLevel === lvl
                     ? 'bg-blue-900 text-white shadow-md font-black'
-                    : 'text-slate-500/70 hover:text-white'
+                    : 'text-slate-500 hover:text-slate-900'
                 }`}
               >
                 {lvl === 'ALL' ? t('allCategories') : `${lvl}`}
@@ -311,7 +311,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ currentUser }) => {
             className={`py-2 px-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
               sortBy === 'points'
                 ? 'bg-blue-900 text-white border-emerald-400 shadow-lg shadow-blue-900/20'
-                : 'bg-white/5 border-white/10 text-slate-500/80 hover:bg-slate-50 hover:text-white'
+                : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50 hover:text-slate-900'
             }`}
           >
             <Star className="w-3.5 h-3.5 text-blue-900" />
@@ -323,7 +323,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ currentUser }) => {
             className={`py-2 px-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
               sortBy === 'quizzes'
                 ? 'bg-blue-900 text-white border-emerald-400 shadow-lg shadow-blue-900/20'
-                : 'bg-white/5 border-white/10 text-slate-500/80 hover:bg-slate-50 hover:text-white'
+                : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50 hover:text-slate-900'
             }`}
           >
             <Zap className="w-3.5 h-3.5 text-blue-900" />
@@ -335,7 +335,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ currentUser }) => {
             className={`py-2 px-3 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
               sortBy === 'chapters'
                 ? 'bg-blue-900 text-white border-emerald-400 shadow-lg shadow-blue-900/20'
-                : 'bg-white/5 border-white/10 text-slate-500/80 hover:bg-slate-50 hover:text-white'
+                : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50 hover:text-slate-900'
             }`}
           >
             <BookOpen className="w-3.5 h-3.5 text-blue-900" />
@@ -426,7 +426,7 @@ export const Leaderboard: React.FC<LeaderboardProps> = ({ currentUser }) => {
               className={`p-3.5 rounded-2xl border transition-all flex items-center justify-between gap-3 ${
                 student.isCurrentUser
                   ? 'bg-blue-50 border-blue-900 text-white ring-1 ring-blue-900/50 shadow-lg'
-                  : 'bg-white/5 border-white/10 hover:bg-slate-50 text-slate-100'
+                  : 'bg-white border-slate-200 hover:bg-slate-50 text-slate-100'
               }`}
             >
               <div className="flex items-center gap-3">

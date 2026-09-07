@@ -81,7 +81,7 @@ export const InstallPromptModal: React.FC<InstallPromptModalProps> = ({ isOpen, 
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-slate-500 hover:text-white bg-white hover:bg-white/20 rounded-xl transition-all"
+            className="p-2 text-slate-500 hover:text-slate-900 bg-white hover:bg-slate-50 rounded-xl transition-all"
           >
             <X className="w-5 h-5" />
           </button>
@@ -109,7 +109,7 @@ export const InstallPromptModal: React.FC<InstallPromptModalProps> = ({ isOpen, 
           <button
             onClick={() => setActiveTab('android')}
             className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all ${
-              activeTab === 'android' ? 'bg-blue-900 text-white' : 'text-slate-500 hover:text-white'
+              activeTab === 'android' ? 'bg-blue-900 text-white' : 'text-slate-500 hover:text-slate-900'
             }`}
           >
             Android
@@ -117,7 +117,7 @@ export const InstallPromptModal: React.FC<InstallPromptModalProps> = ({ isOpen, 
           <button
             onClick={() => setActiveTab('ios')}
             className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all ${
-              activeTab === 'ios' ? 'bg-blue-900 text-white' : 'text-slate-500 hover:text-white'
+              activeTab === 'ios' ? 'bg-blue-900 text-white' : 'text-slate-500 hover:text-slate-900'
             }`}
           >
             iPhone / iPad
@@ -125,7 +125,7 @@ export const InstallPromptModal: React.FC<InstallPromptModalProps> = ({ isOpen, 
           <button
             onClick={() => setActiveTab('share')}
             className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all ${
-              activeTab === 'share' ? 'bg-blue-900 text-white' : 'text-slate-500 hover:text-white'
+              activeTab === 'share' ? 'bg-blue-900 text-white' : 'text-slate-500 hover:text-slate-900'
             }`}
           >
             {lang === 'en' ? 'App Link' : 'অ্যাপ লিঙ্ক'}

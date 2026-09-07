@@ -173,7 +173,7 @@ export const QuizResultsView: React.FC<QuizResultsViewProps> = ({
           </button>
           <button
             onClick={onRestartQuiz}
-            className="py-3 px-5 bg-white hover:bg-white/20 border border-slate-200 text-slate-900 font-bold rounded-2xl text-xs flex items-center gap-2 transition-all shadow"
+            className="py-3 px-5 bg-white hover:bg-slate-50 border border-slate-200 text-slate-900 font-bold rounded-2xl text-xs flex items-center gap-2 transition-all shadow"
           >
             <RotateCcw className="w-4 h-4 text-slate-500" /> {t('retakeQuizBtn')}
           </button>
@@ -237,7 +237,7 @@ export const QuizResultsView: React.FC<QuizResultsViewProps> = ({
                   <button
                     onClick={() => handleAskAiTutor(ans.question, ans.selectedIndex)}
                     disabled={loadingAiId === ans.question.id}
-                    className="w-full py-2.5 px-3.5 bg-slate-100 hover:bg-slate-500/30 border border-slate-200 text-slate-500 font-bold rounded-xl flex items-center justify-between transition-colors"
+                    className="w-full py-2.5 px-3.5 bg-slate-100 hover:bg-slate-200 border border-slate-200 text-slate-500 font-bold rounded-xl flex items-center justify-between transition-colors"
                   >
                     <span className="flex items-center gap-2 text-xs">
                       <Bot className="w-4 h-4 text-blue-900" />

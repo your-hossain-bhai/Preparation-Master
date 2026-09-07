@@ -326,7 +326,7 @@ export const SubscriptionView: React.FC<SubscriptionViewProps> = ({ user, onUpda
                 className={`p-3.5 rounded-2xl border text-xs font-bold transition-all flex items-center justify-between ${
                   operator === op
                     ? 'border-blue-900 bg-blue-50 text-blue-900 shadow-md ring-1 ring-blue-900/50'
-                    : 'border-white/10 bg-white/5 text-slate-600 hover:bg-slate-50'
+                    : 'border-slate-200 bg-white text-slate-600 hover:bg-slate-50'
                 }`}
               >
                 <div className="flex items-center gap-2">
@@ -364,7 +364,7 @@ export const SubscriptionView: React.FC<SubscriptionViewProps> = ({ user, onUpda
               className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 ${
                 subMethod === 'otp'
                   ? 'bg-blue-900 text-white shadow-md'
-                  : 'text-slate-300 hover:text-white'
+                  : 'text-slate-500 hover:text-slate-900'
               }`}
             >
               <KeyRound className="w-3.5 h-3.5" /> {isEnglish ? 'bdapps OTP Flow (Official)' : 'bdapps ওটিপি ভেরিফিকেশন'}
@@ -376,7 +376,7 @@ export const SubscriptionView: React.FC<SubscriptionViewProps> = ({ user, onUpda
               className={`flex-1 py-2 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1.5 ${
                 subMethod === 'direct'
                   ? 'bg-blue-900 text-white shadow-md'
-                  : 'text-slate-300 hover:text-white'
+                  : 'text-slate-500 hover:text-slate-900'
               }`}
             >
               <Zap className="w-3.5 h-3.5" /> {isEnglish ? '1-Click Direct Send' : '১-ক্লিক ডিরেক্ট সেন্ট'}
@@ -516,7 +516,7 @@ export const SubscriptionView: React.FC<SubscriptionViewProps> = ({ user, onUpda
               <div className="font-bold text-slate-900 flex items-center gap-1.5">
                 <MessageSquare className="w-3.5 h-3.5 text-blue-900" /> SMS Subscription:
               </div>
-              <p className="text-slate-300 mt-1">
+              <p className="text-slate-500 mt-1">
                 Send <code className="text-blue-900 font-mono font-bold bg-white px-1.5 py-0.5 rounded">startprep</code> to <code className="text-slate-500 font-mono font-bold">21213</code>
               </p>
               <p className="text-[10px] text-slate-500 mt-1">
@@ -528,7 +528,7 @@ export const SubscriptionView: React.FC<SubscriptionViewProps> = ({ user, onUpda
               <div className="font-bold text-slate-900 flex items-center gap-1.5">
                 <Hash className="w-3.5 h-3.5 text-blue-900" /> USSD Direct Dial:
               </div>
-              <p className="text-slate-300 mt-1">
+              <p className="text-slate-500 mt-1">
                 Dial <code className="text-blue-900 font-mono font-bold bg-white px-1.5 py-0.5 rounded">78655</code> from your Robi/Airtel SIM.
               </p>
               <p className="text-[10px] text-slate-500 mt-1">

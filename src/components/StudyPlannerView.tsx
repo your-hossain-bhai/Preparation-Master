@@ -464,7 +464,7 @@ export const StudyPlannerView: React.FC<StudyPlannerViewProps> = ({ user, onUpda
                         className={`p-2.5 rounded-2xl border transition-all min-h-[95px] flex flex-col justify-between cursor-pointer group relative ${
                           scheduledSlot
                             ? `${colors?.bg} ${colors?.border} hover:border-blue-900`
-                            : 'bg-white/5 border-dashed border-white/15 hover:border-slate-200 hover:bg-slate-50'
+                            : 'bg-white border-dashed border-slate-200 hover:border-slate-200 hover:bg-slate-50'
                         }`}
                       >
                         {scheduledSlot ? (
@@ -479,7 +479,7 @@ export const StudyPlannerView: React.FC<StudyPlannerViewProps> = ({ user, onUpda
                                   <button
                                     onClick={(e) => handleToggleComplete(dayKey, slotKey, e)}
                                     title={scheduledSlot.completed ? 'Mark Incomplete' : 'Mark Completed (+10 XP)'}
-                                    className="p-1 hover:bg-white/20 rounded-md transition-all"
+                                    className="p-1 hover:bg-slate-50 rounded-md transition-all"
                                   >
                                     {scheduledSlot.completed ? (
                                       <CheckCircle2 className="w-4 h-4 text-slate-500 fill-slate-200" />
@@ -535,7 +535,7 @@ export const StudyPlannerView: React.FC<StudyPlannerViewProps> = ({ user, onUpda
           <div className="bg-slate-50 border-2 border-blue-900/50 p-6 rounded-3xl max-w-md w-full text-slate-900 space-y-5 shadow-2xl relative animate-in fade-in zoom-in duration-200">
             <button
               onClick={() => setModalOpen(false)}
-              className="absolute top-4 right-4 p-2 bg-white hover:bg-white/20 rounded-full text-slate-900 transition-all"
+              className="absolute top-4 right-4 p-2 bg-white hover:bg-slate-50 rounded-full text-slate-900 transition-all"
             >
               <X className="w-4 h-4" />
             </button>
@@ -594,7 +594,7 @@ export const StudyPlannerView: React.FC<StudyPlannerViewProps> = ({ user, onUpda
               <button
                 type="button"
                 onClick={() => setModalOpen(false)}
-                className="w-1/3 py-3 bg-white hover:bg-white/20 text-slate-900 text-xs font-bold rounded-2xl transition-all"
+                className="w-1/3 py-3 bg-white hover:bg-slate-50 text-slate-900 text-xs font-bold rounded-2xl transition-all"
               >
                 {lang === 'en' ? 'Cancel' : 'বাতিল'}
               </button>

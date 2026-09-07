@@ -514,7 +514,7 @@ function MainApp() {
             <button
               onClick={() => setIsReminderModalOpen(true)}
               title={lang === 'en' ? 'Daily Study Reminders' : 'ডেইলি রিমাইন্ডার সেট করুন'}
-              className="bg-white hover:bg-white/20 px-4 py-2 rounded-2xl border border-slate-200 transition-all flex items-center gap-2 text-sm font-bold text-blue-900 shadow-sm relative active:scale-95"
+              className="bg-white hover:bg-slate-50 px-4 py-2 rounded-2xl border border-slate-200 transition-all flex items-center gap-2 text-sm font-bold text-blue-900 shadow-sm relative active:scale-95"
             >
               <BellRing className="w-4 h-4 text-blue-900" />
               <span>
@@ -530,7 +530,7 @@ function MainApp() {
                 className={`px-4 py-1.5 rounded-xl transition-all flex items-center gap-2 ${
                   lang === 'bn'
                     ? 'bg-blue-900 text-white shadow-md font-extrabold'
-                    : 'text-slate-500/80 hover:text-white'
+                    : 'text-slate-500 hover:text-slate-900'
                 }`}
               >
                 বাংলা
@@ -540,7 +540,7 @@ function MainApp() {
                 className={`px-4 py-1.5 rounded-xl transition-all flex items-center gap-2 ${
                   lang === 'en'
                     ? 'bg-blue-900 text-white shadow-md font-extrabold'
-                    : 'text-slate-500/80 hover:text-white'
+                    : 'text-slate-500 hover:text-slate-900'
                 }`}
               >
                 English
@@ -554,7 +554,7 @@ function MainApp() {
                 className={`px-4 py-1.5 rounded-xl transition-all ${
                   user.academicLevel === 'SSC'
                     ? 'bg-blue-900 text-white shadow-md font-extrabold'
-                    : 'text-slate-500/80 hover:text-white'
+                    : 'text-slate-500 hover:text-slate-900'
                 }`}
               >
                 SSC
@@ -564,7 +564,7 @@ function MainApp() {
                 className={`px-4 py-1.5 rounded-xl transition-all ${
                   user.academicLevel === 'HSC'
                     ? 'bg-blue-900 text-white shadow-md font-extrabold'
-                    : 'text-slate-500/80 hover:text-white'
+                    : 'text-slate-500 hover:text-slate-900'
                 }`}
               >
                 HSC
@@ -574,7 +574,7 @@ function MainApp() {
             <button
               onClick={() => setIsAuthModalOpen(true)}
               title={lang === 'en' ? 'Student Account / Login' : 'শিক্ষার্থী অ্যাকাউন্ট / লগইন'}
-              className="bg-white hover:bg-white/20 px-4 py-2 rounded-2xl border border-slate-200 transition-all flex items-center gap-2 text-sm font-bold shadow-sm active:scale-95 text-slate-500 hover:text-white"
+              className="bg-white hover:bg-slate-50 px-4 py-2 rounded-2xl border border-slate-200 transition-all flex items-center gap-2 text-sm font-bold shadow-sm active:scale-95 text-slate-500 hover:text-slate-900"
             >
               {user.avatarUrl ? (
                 <img
@@ -661,7 +661,7 @@ function MainApp() {
                   clearActiveQuizSession();
                   setResumableSession(null);
                 }}
-                className="px-3 py-2 bg-white hover:bg-white/20 text-slate-900 font-bold text-xs rounded-xl transition-all"
+                className="px-3 py-2 bg-white hover:bg-slate-50 text-slate-900 font-bold text-xs rounded-xl transition-all"
               >
                 {lang === 'en' ? 'Dismiss' : 'মুছে ফেলুন'}
               </button>
@@ -688,7 +688,7 @@ function MainApp() {
         </div>
         {/* Pure Student App Navigation Bar - Sticky Bottom on Mobile, Static on Desktop */}
         <div className="order-3 sm:order-2 sticky sm:static bottom-4 sm:bottom-auto w-full z-50 mt-auto sm:mt-0 p-1 sm:p-0">
-          <div className="max-w-6xl mx-auto bg-white sm:bg-white/10 p-2 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.5)] sm:shadow-xl border border-slate-200 flex items-center justify-around overflow-x-auto gap-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden app-nav">
+          <div className="max-w-6xl mx-auto bg-white sm:bg-white p-2 rounded-2xl shadow-[0_8px_30px_rgba(0,0,0,0.5)] sm:shadow-xl border border-slate-200 flex items-center justify-around overflow-x-auto gap-1 [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden app-nav">
           <button
             onClick={() => {
               setActiveTab('quiz');
@@ -697,7 +697,7 @@ function MainApp() {
             className={`flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-[10px] sm:text-sm font-bold transition-all shrink-0 ${
               activeTab === 'quiz'
                 ? 'bg-blue-900 text-white font-extrabold shadow-lg shadow-blue-900/20 active-tab'
-                : 'text-slate-500/80 hover:bg-slate-50 hover:text-white'
+                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
             }`}
           >
             <Zap className="w-5 h-5 sm:w-4 sm:h-4 text-blue-900" />
@@ -709,7 +709,7 @@ function MainApp() {
             className={`flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-[10px] sm:text-sm font-bold transition-all shrink-0 ${
               activeTab === 'bot'
                 ? 'bg-blue-900 text-white font-extrabold shadow-lg shadow-blue-900/20 active-tab'
-                : 'text-slate-500/80 hover:bg-slate-50 hover:text-white'
+                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
             }`}
           >
             <Bot className="w-5 h-5 sm:w-4 sm:h-4 text-blue-900" />
@@ -721,7 +721,7 @@ function MainApp() {
             className={`flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-[10px] sm:text-sm font-bold transition-all shrink-0 ${
               activeTab === 'planner'
                 ? 'bg-blue-900 text-white font-extrabold shadow-lg shadow-blue-900/20 active-tab'
-                : 'text-slate-500/80 hover:bg-slate-50 hover:text-white'
+                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
             }`}
           >
             <Calendar className="w-5 h-5 sm:w-4 sm:h-4 text-blue-900" />
@@ -733,7 +733,7 @@ function MainApp() {
             className={`flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-[10px] sm:text-sm font-bold transition-all shrink-0 ${
               activeTab === 'community'
                 ? 'bg-blue-900 text-white font-extrabold shadow-lg shadow-blue-900/20 active-tab'
-                : 'text-slate-500/80 hover:bg-slate-50 hover:text-white'
+                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
             }`}
           >
             <Users className="w-5 h-5 sm:w-4 sm:h-4 text-slate-500" />
@@ -745,7 +745,7 @@ function MainApp() {
             className={`flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-[10px] sm:text-sm font-bold transition-all shrink-0 ${
               activeTab === 'subscription'
                 ? 'bg-blue-900 text-white font-extrabold shadow-lg shadow-blue-900/20 active-tab'
-                : 'text-slate-500/80 hover:bg-slate-50 hover:text-white'
+                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
             }`}
           >
             <div className="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-2">
@@ -768,7 +768,7 @@ function MainApp() {
             className={`flex flex-col sm:flex-row items-center justify-center gap-1.5 sm:gap-2 px-3 sm:px-4 py-2 sm:py-2.5 rounded-xl text-[10px] sm:text-sm font-bold transition-all shrink-0 ${
               activeTab === 'profile'
                 ? 'bg-blue-900 text-white font-extrabold shadow-lg shadow-blue-900/20 active-tab'
-                : 'text-slate-500/80 hover:bg-slate-50 hover:text-white'
+                : 'text-slate-500 hover:bg-slate-50 hover:text-slate-900'
             }`}
           >
             <Smartphone className="w-5 h-5 sm:w-4 sm:h-4 text-slate-500" />

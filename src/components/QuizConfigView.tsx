@@ -205,7 +205,7 @@ export const QuizConfigView: React.FC<QuizConfigViewProps> = ({
                 className={`px-3 py-1.5 text-xs font-extrabold rounded-lg transition-all ${
                   curriculumVersion === 'Bangla'
                     ? 'bg-blue-900 text-white shadow'
-                    : 'text-slate-500/80 hover:text-white'
+                    : 'text-slate-500 hover:text-slate-900'
                 }`}
               >
                 বাংলা মাধ্যম
@@ -219,7 +219,7 @@ export const QuizConfigView: React.FC<QuizConfigViewProps> = ({
                 className={`px-3 py-1.5 text-xs font-extrabold rounded-lg transition-all ${
                   curriculumVersion === 'English'
                     ? 'bg-blue-900 text-white shadow'
-                    : 'text-slate-500/80 hover:text-white'
+                    : 'text-slate-500 hover:text-slate-900'
                 }`}
               >
                 English Version / Medium
@@ -244,7 +244,7 @@ export const QuizConfigView: React.FC<QuizConfigViewProps> = ({
                       setSubject(newSubjects[0]);
                     }}
                     className={`flex-1 py-1.5 text-xs font-extrabold rounded-lg transition-all ${
-                      level === l ? 'bg-blue-900 text-white shadow' : 'text-slate-500/70 hover:text-white'
+                      level === l ? 'bg-blue-900 text-white shadow' : 'text-slate-500 hover:text-slate-900'
                     }`}
                   >
                     {l}

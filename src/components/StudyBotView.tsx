@@ -216,7 +216,7 @@ export const StudyBotView: React.FC<StudyBotViewProps> = ({ user, onUpdateUser }
                 className={`px-3 py-1 rounded-xl text-xs font-black transition-all ${
                   user.academicLevel === 'SSC'
                     ? 'bg-blue-900 text-white shadow-md'
-                    : 'text-slate-500/80 hover:text-white'
+                    : 'text-slate-500 hover:text-slate-900'
                 }`}
               >
                 SSC
@@ -226,7 +226,7 @@ export const StudyBotView: React.FC<StudyBotViewProps> = ({ user, onUpdateUser }
                 className={`px-3 py-1 rounded-xl text-xs font-black transition-all ${
                   user.academicLevel === 'HSC'
                     ? 'bg-blue-900 text-white shadow-md'
-                    : 'text-slate-500/80 hover:text-white'
+                    : 'text-slate-500 hover:text-slate-900'
                 }`}
               >
                 HSC
@@ -246,7 +246,7 @@ export const StudyBotView: React.FC<StudyBotViewProps> = ({ user, onUpdateUser }
 
             <button
               onClick={handleClearHistory}
-              className="px-3 py-1.5 bg-white hover:bg-white/20 border border-slate-200 text-slate-900 font-bold text-xs rounded-2xl flex items-center gap-1.5 transition-all shadow-sm"
+              className="px-3 py-1.5 bg-white hover:bg-slate-50 border border-slate-200 text-slate-900 font-bold text-xs rounded-2xl flex items-center gap-1.5 transition-all shadow-sm"
             >
               <Trash2 className="w-3.5 h-3.5 text-rose-700" />
               <span>{isEnglish ? 'Clear' : 'নতুন চ্যাট'}</span>
@@ -280,7 +280,7 @@ export const StudyBotView: React.FC<StudyBotViewProps> = ({ user, onUpdateUser }
               key={idx}
               onClick={() => handleSendMessage(chip.query)}
               disabled={loading}
-              className="px-3 py-1.5 bg-white hover:bg-white/15 border border-slate-200 text-slate-900 hover:text-white rounded-xl text-xs font-semibold transition-all hover:scale-105 active:scale-95 disabled:opacity-50 shadow-sm"
+              className="px-3 py-1.5 bg-white hover:bg-slate-50 border border-slate-200 text-slate-900 hover:text-slate-900 rounded-xl text-xs font-semibold transition-all hover:scale-105 active:scale-95 disabled:opacity-50 shadow-sm"
             >
               {chip.label}
             </button>
@@ -332,7 +332,7 @@ export const StudyBotView: React.FC<StudyBotViewProps> = ({ user, onUpdateUser }
                     {!isUser && (
                       <button
                         onClick={() => handleCopyText(msg.id, msg.text)}
-                        className="hover:text-white flex items-center gap-1 transition-colors px-1.5 py-0.5 rounded bg-white border border-slate-200 shadow-sm"
+                        className="hover:text-slate-900 flex items-center gap-1 transition-colors px-1.5 py-0.5 rounded bg-white border border-slate-200 shadow-sm"
                         title="Copy Answer"
                       >
                         {copiedId === msg.id ? (
@@ -411,7 +411,7 @@ export const StudyBotView: React.FC<StudyBotViewProps> = ({ user, onUpdateUser }
             type="button"
             onClick={() => fileInputRef.current?.click()}
             title={isEnglish ? 'Upload Question Photo' : 'ছবি আপলোড করুন'}
-            className="p-3 bg-white hover:bg-white/20 border border-slate-200 rounded-2xl text-slate-500 hover:text-white transition-all active:scale-95 shrink-0 shadow-sm"
+            className="p-3 bg-white hover:bg-slate-50 border border-slate-200 rounded-2xl text-slate-500 hover:text-slate-900 transition-all active:scale-95 shrink-0 shadow-sm"
           >
             <ImageIcon className="w-5 h-5" />
           </button>

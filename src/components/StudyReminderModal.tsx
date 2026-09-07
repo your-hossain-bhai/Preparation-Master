@@ -72,7 +72,7 @@ export const StudyReminderModal: React.FC<StudyReminderModalProps> = ({
 
       if (result === 'granted') {
         setErrorMessage(null);
-        await subscribeToPushNotifications(); // Subscribe to Server Push when granted
+        // await subscribeToPushNotifications(); // Subscribe to Server Push when granted
         new Notification(
           isEnglish ? 'Notifications Allowed! 🎉' : 'নোটিফিকেশন চালু হয়েছে! 🎉',
           {
@@ -136,7 +136,7 @@ export const StudyReminderModal: React.FC<StudyReminderModalProps> = ({
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-4 right-4 p-2 bg-white hover:bg-white/20 text-slate-500 hover:text-white rounded-full transition-colors"
+          className="absolute top-4 right-4 p-2 bg-white hover:bg-slate-50 text-slate-500 hover:text-slate-900 rounded-full transition-colors"
         >
           <X className="w-5 h-5" />
         </button>
@@ -225,7 +225,7 @@ export const StudyReminderModal: React.FC<StudyReminderModalProps> = ({
             <button
               onClick={handleToggleEnable}
               className={`w-12 h-6 rounded-full transition-colors relative p-0.5 ${
-                enabled ? 'bg-blue-900' : 'bg-white/20'
+                enabled ? 'bg-blue-900' : 'bg-white'
               }`}
             >
               <div
@@ -277,7 +277,7 @@ export const StudyReminderModal: React.FC<StudyReminderModalProps> = ({
 
           <button
             onClick={onClose}
-            className="py-3 px-5 bg-white hover:bg-white/20 text-slate-900 font-bold rounded-2xl text-xs transition-all"
+            className="py-3 px-5 bg-white hover:bg-slate-50 text-slate-900 font-bold rounded-2xl text-xs transition-all"
           >
             {isEnglish ? 'Done' : 'সম্পন্ন'}
           </button>

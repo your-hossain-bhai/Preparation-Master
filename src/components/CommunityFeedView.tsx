@@ -211,7 +211,7 @@ export const CommunityFeedView: React.FC<CommunityFeedViewProps> = ({ user }) =>
           className={`flex-1 py-2.5 px-4 rounded-xl text-xs font-extrabold flex items-center justify-center gap-2 transition-all ${
             activeCommunityTab === 'feed'
               ? 'bg-blue-900 text-white shadow-md font-black'
-              : 'text-slate-500 hover:text-white hover:bg-slate-50'
+              : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
           }`}
         >
           <Users className="w-4 h-4" /> {t('feedTab')}
@@ -222,7 +222,7 @@ export const CommunityFeedView: React.FC<CommunityFeedViewProps> = ({ user }) =>
           className={`flex-1 py-2.5 px-4 rounded-xl text-xs font-extrabold flex items-center justify-center gap-2 transition-all ${
             activeCommunityTab === 'leaderboard'
               ? 'bg-blue-900 text-white shadow-md font-black'
-              : 'text-slate-500 hover:text-white hover:bg-slate-50'
+              : 'text-slate-500 hover:text-slate-900 hover:bg-slate-50'
           }`}
         >
           <Trophy className="w-4 h-4 text-blue-900 fill-blue-900 text-blue-900 group-hover:scale-110 transition-transform" /> {t('leaderboardTab')}
@@ -265,7 +265,7 @@ export const CommunityFeedView: React.FC<CommunityFeedViewProps> = ({ user }) =>
                 className={`px-4 py-2 rounded-full text-xs font-bold shrink-0 transition-all border ${
                   selectedSubjectFilter === sub
                     ? 'bg-blue-900 text-white border-blue-900 shadow-md font-extrabold'
-                    : 'bg-white/10 border-white/15 text-slate-500/90 hover:bg-white/20 hover:text-white'
+                    : 'bg-white border-slate-200 text-slate-500 hover:bg-slate-50 hover:text-slate-900'
                 }`}
               >
                 {sub === 'All' ? t('filterAll') : sub}
@@ -311,7 +311,7 @@ export const CommunityFeedView: React.FC<CommunityFeedViewProps> = ({ user }) =>
                     className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl border font-bold transition-all ${
                       post.userUpvoted
                         ? 'bg-blue-900 text-white border-blue-900 shadow'
-                        : 'border-white/15 bg-white/5 hover:bg-white/15 text-white'
+                        : 'border-slate-200 bg-white hover:bg-slate-50 text-white'
                     }`}
                   >
                     <ThumbsUp className="w-3.5 h-3.5" />
@@ -320,7 +320,7 @@ export const CommunityFeedView: React.FC<CommunityFeedViewProps> = ({ user }) =>
 
                   <button
                     onClick={() => setActiveCommentPostId(activeCommentPostId === post.id ? null : post.id)}
-                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-slate-200 bg-white hover:bg-white/15 font-semibold text-slate-900 transition-all shadow-sm"
+                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 font-semibold text-slate-900 transition-all shadow-sm"
                   >
                     <MessageSquare className="w-3.5 h-3.5 text-blue-900" />
                     <span>{post.comments.length} {lang === 'en' ? 'Replies' : 'টি উত্তর'}</span>
@@ -350,7 +350,7 @@ export const CommunityFeedView: React.FC<CommunityFeedViewProps> = ({ user }) =>
                         className={`p-3.5 rounded-2xl text-xs space-y-1.5 ${
                           comment.isAiTutor
                             ? 'bg-white text-slate-900 border border-slate-200 shadow-inner'
-                            : 'bg-white/5 border border-white/10 text-slate-600'
+                            : 'bg-white border border-slate-200 text-slate-600'
                         }`}
                       >
                         <div className="flex items-center justify-between font-bold">

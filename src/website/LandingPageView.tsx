@@ -183,7 +183,7 @@ bdapps Carrier Billing Enabled`;
             </div>
             <button
               onClick={onOpenWebApp}
-              className="w-full py-2.5 px-4 bg-white hover:bg-white/20 border border-slate-200 text-slate-900 font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm"
+              className="w-full py-2.5 px-4 bg-white hover:bg-slate-50 border border-slate-200 text-slate-900 font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm"
             >
               <span>{lang === 'en' ? 'Launch Web App' : 'ওয়েব অ্যাপ খুলুন'}</span>
               <ArrowRight className="w-3.5 h-3.5 text-blue-900" />
@@ -227,7 +227,7 @@ bdapps Carrier Billing Enabled`;
             </div>
             <button
               onClick={onOpenFlutterCode}
-              className="w-full py-2.5 px-4 bg-white hover:bg-white/20 border border-slate-200 text-slate-900 font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm"
+              className="w-full py-2.5 px-4 bg-white hover:bg-slate-50 border border-slate-200 text-slate-900 font-bold rounded-xl text-xs flex items-center justify-center gap-1.5 shadow-sm"
             >
               <span>{lang === 'en' ? 'Explore Flutter Code' : 'ফ্লাটার কোড দেখুন'}</span>
               <ChevronRight className="w-3.5 h-3.5 text-cyan-300" />
@@ -267,7 +267,7 @@ bdapps Carrier Billing Enabled`;
               const isSelected = demoSelectedOption === idx;
               const isCorrect = idx === sampleQuestion.correctIndex;
 
-              let btnClass = 'bg-white/5 border-white/15 text-slate-100 hover:bg-white/15';
+              let btnClass = 'bg-white border-slate-200 text-slate-100 hover:bg-slate-50';
               if (demoSelectedOption !== null) {
                 if (isCorrect) {
                   btnClass = 'bg-slate-500/30 border-emerald-400 text-slate-500 font-bold';

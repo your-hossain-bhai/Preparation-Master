@@ -513,7 +513,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
           </div>
           <button
             onClick={onClose}
-            className="p-2 text-slate-500 hover:text-white bg-white hover:bg-white/20 rounded-xl transition-all"
+            className="p-2 text-slate-500 hover:text-slate-900 bg-white hover:bg-slate-50 rounded-xl transition-all"
           >
             <X className="w-5 h-5" />
           </button>
@@ -530,7 +530,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
               authMode === 'signin'
                 ? 'bg-blue-900 text-white shadow-md'
-                : 'text-slate-500 hover:text-white'
+                : 'text-slate-500 hover:text-slate-900'
             }`}
           >
             <LogIn className="w-3.5 h-3.5" />
@@ -546,7 +546,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
               authMode === 'signup'
                 ? 'bg-blue-900 text-white shadow-md'
-                : 'text-slate-500 hover:text-white'
+                : 'text-slate-500 hover:text-slate-900'
             }`}
           >
             <UserPlus className="w-3.5 h-3.5" />
@@ -561,7 +561,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
             className={`flex-1 py-2 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 ${
               authMode === 'phone'
                 ? 'bg-blue-900 text-white shadow-md'
-                : 'text-slate-500 hover:text-white'
+                : 'text-slate-500 hover:text-slate-900'
             }`}
           >
             <Phone className="w-3.5 h-3.5" />
@@ -889,7 +889,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({
                       setOtp('');
                       setAuthError('');
                     }}
-                    className="text-[11px] text-slate-500 hover:text-white underline flex items-center gap-1"
+                    className="text-[11px] text-slate-500 hover:text-slate-900 underline flex items-center gap-1"
                   >
                     <RotateCcw className="w-3 h-3" />
                     {lang === 'en' ? 'Change Number' : 'নম্বর পরিবর্তন'}
