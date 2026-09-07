@@ -189,7 +189,7 @@ export const StudyBotView: React.FC<StudyBotViewProps> = ({ user, onUpdateUser }
   return (
     <div className="max-w-4xl mx-auto space-y-4 my-4">
       {/* Top Header Card */}
-      <div className="p-6 bg-gradient-to-r from-slate-50 via-white to-slate-50 rounded-3xl shadow-2xl border border-slate-200 text-slate-900 space-y-4">
+      <div className="p-6 bg-gradient-to-r from-slate-50 via-white to-slate-50 rounded-3xl shadow-2xl shadow-blue-900/10 border border-blue-100 text-slate-900 space-y-4">
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="flex items-center gap-3.5">
             <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-blue-900 to-blue-800 text-white flex items-center justify-center font-black shadow-lg shadow-blue-900/20 shrink-0">
@@ -425,7 +425,7 @@ export const StudyBotView: React.FC<StudyBotViewProps> = ({ user, onUpdateUser }
                 ? `Ask your ${user.academicLevel} study question, problem, or concept...`
                 : `আপনার ${user.academicLevel} এর যেকোনো প্রশ্ন বা অংক লিখে সমাধান চান...`
             }
-            className="flex-1 px-4 py-3 bg-white border border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-900 placeholder-emerald-200/40 focus:border-blue-900 focus:outline-none shadow-sm"
+            className="flex-1 px-4 py-3 bg-white border border-slate-200 rounded-2xl text-xs sm:text-sm text-slate-900 placeholder-slate-400 focus:border-blue-900 focus:outline-none focus:ring-4 focus:ring-blue-900/10 shadow-sm transition-all"
           />
 
           <button
@@ -434,10 +434,10 @@ export const StudyBotView: React.FC<StudyBotViewProps> = ({ user, onUpdateUser }
             className="px-5 py-3 bg-gradient-to-r from-blue-900 to-blue-800 hover:from-blue-900 hover:to-blue-800 text-white font-black text-xs rounded-2xl shadow-xl shadow-blue-900/20 flex items-center justify-center gap-1.5 transition-all active:scale-95 disabled:opacity-50 shrink-0 uppercase tracking-wider"
           >
             {loading ? (
-              <Loader2 className="w-4 h-4 animate-spin text-slate-900" />
+              <Loader2 className="w-4 h-4 animate-spin text-white" />
             ) : (
               <>
-                <Send className="w-4 h-4 text-slate-900" />
+                <Send className="w-4 h-4 text-white" />
                 <span className="hidden sm:inline">{isEnglish ? 'Send' : 'পাঠান'}</span>
               </>
             )}

@@ -172,6 +172,23 @@ function MainApp() {
   const [isReminderModalOpen, setIsReminderModalOpen] = useState(false);
   const [isInstallModalOpen, setIsInstallModalOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
+  const [isStandalone, setIsStandalone] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.matchMedia('(display-mode: standalone)').matches || (window.navigator as any).standalone === true;
+    }
+    return false;
+  });
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const mediaQuery = window.matchMedia('(display-mode: standalone)');
+    const handleChange = (e) => {
+      setIsStandalone(e.matches || (window.navigator as any).standalone === true);
+    };
+    mediaQuery.addEventListener('change', handleChange);
+    return () => mediaQuery.removeEventListener('change', handleChange);
+  }, []);
+
   const [isOnline, setIsOnline] = useState<boolean>(() =>
     typeof navigator !== 'undefined' ? navigator.onLine : true
   );
@@ -468,7 +485,7 @@ function MainApp() {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans relative overflow-x-hidden selection:bg-blue-900 selection:text-white app-container">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50/50 via-slate-50 to-sky-100/50 text-slate-900 flex flex-col font-sans relative overflow-x-hidden selection:bg-blue-900 selection:text-white app-container">
       {/* Platform Header */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-lg app-header">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-3 flex flex-col sm:flex-row sm:items-center justify-between gap-3 relative z-10">
@@ -501,14 +518,16 @@ function MainApp() {
             {/* Controls: Language Switcher, Install, Reminder & Academic Level Toggle */}
           <div className="flex items-center gap-3 sm:gap-4 flex-wrap justify-start sm:justify-end w-full sm:w-auto mb-3 sm:mb-0">
             {/* Install on Mobile App Button */}
-            <button
-              onClick={() => setIsInstallModalOpen(true)}
-              title={lang === 'en' ? 'Install App on Phone' : 'মোবাইলে ইনস্টল করুন'}
-              className="bg-blue-900 hover:bg-blue-800 text-white px-4 py-2 rounded-2xl transition-all flex items-center gap-2 text-sm font-extrabold shadow-md shadow-emerald-950/30 active:scale-95"
-            >
-              <Smartphone className="w-4 h-4" />
-              <span>{lang === 'en' ? 'Install' : 'ইনস্টল'}</span>
-            </button>
+            {!isStandalone && (
+              <button
+                onClick={() => setIsInstallModalOpen(true)}
+                title={lang === 'en' ? 'Install App on Phone' : 'মোবাইলে ইনস্টল করুন'}
+                className="bg-blue-900 hover:bg-blue-800 text-white px-4 py-2 rounded-2xl transition-all flex items-center gap-2 text-sm font-extrabold shadow-md shadow-emerald-950/30 active:scale-95"
+              >
+                <Smartphone className="w-4 h-4" />
+                <span>{lang === 'en' ? 'Install' : 'ইনস্টল'}</span>
+              </button>
+            )}
 
             {/* Daily Study Reminder Trigger */}
             <button
